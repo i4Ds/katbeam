@@ -1,0 +1,43 @@
+{% set data = load_setup_py_data() %}
+{% set name = data.get('name') %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ data.get('version') }}
+
+source:
+  path: ..
+
+build:
+  noarch: python
+  number: 0
+  script: $PYTHON -m pip install .
+
+requirements:
+  build:
+    - pip
+    - numpy
+  host:
+    - python
+  run:
+    - python
+    - numpy
+
+test:
+  imports:
+    - katbeam
+
+about:
+  home: https://github.com/i4Ds/katbeam
+  license: BSD-License
+  license_family: BSD
+  license_file: LICENSE.txt
+  summary: {{ data.get('name') }}
+  description: |
+    {{ data.get('description') }}
+  doc_url: https://github.com/i4Ds/katbeam
+  dev_url: https://github.com/i4Ds/katbeam
+
+extra:
+  recipe-maintainers:
+    - Christoph Vögele
